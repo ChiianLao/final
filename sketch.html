@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<style>
+			body {
+				background-color: #ffffff;
+				margin: 0;
+				overflow: hidden;
+			}
+		</style>
+	</head>
+	<body>
+		
+		<script src="http://threejsplaygnd.brangerbriz.net/js/three.min.js"></script>
+		<script src="http://threejsplaygnd.brangerbriz.net/js/Detector.js"></script>
+		<script>
+
+			if ( ! Detector.webgl ) Detector.addGetWebGLMessage();
+			
+			var camera, scene, renderer;
+			var geometry, material, mesh;
+
+			function setup() {
+
+				var W = window.innerWidth, H = window.innerHeight;
+				renderer = new THREE.WebGLRenderer();
+				
+				renderer.setSize( W, H );
+				document.body.appendChild( renderer.domElement );
+
+				camera = new THREE.PerspectiveCamera( 50, W/H, 1, 10000 );
+				camera.position.z = 500;
+
+				scene = new THREE.Scene();
+				
+				for ( var i = 0; i < 300; i ++ ) {
+					// your mesh code (from the geometry GUI) goes here
+					for ( var i = 0; i < 300; i ++ ) {
+					geometry = new THREE.CubeGeometry( 25, 25, 25 );
+					material = new THREE.MeshBasicMaterial( { color: Math.random()*0xffffff } );
+					mesh = new THREE.Mesh( geometry, material);
+					mesh.position.x = Math.random() * 1000 - 500;
+					mesh.position.y = Math.random() * 1000 - 500;
+					mesh.position.z = Math.random() * 1000 - 500;
+					mesh.rotation.x = Math.random() * 2 * Math.PI;
+					mesh.rotation.y = Math.random() * 2 * Math.PI;
+					mesh.rotation.z = Math.random() * 2 * Math.PI;
+					scene.add( mesh );
+				}
+				}
+				
+				
+				// paste your code from the geometryGUI here
+				map = new THREE.TextureLoader().load("https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX4002466.jpg");
+
+               geometry = new THREE.OctahedronGeometry(108.84, 0);
+               material = new THREE.MeshBasicMaterial({shading: THREE.FlatShading, color: 0xdcdcdc, map: map});
+               mesh = new THREE.Mesh(geometry, material);
+               // map.wrapS = THREE.RepeatWrapping;
+               // map.wrapT = THREE.RepeatWrapping;
+               // map.repeat.set( 1, 1 );
+               mesh.scale.x = mesh.scale.y = mesh.scale.z = 1.06;
+               mesh.position.y = 24.26;
+               mesh.rotation.z = 3;
+               scene.add(mesh);
+
+
+			}
+
+			function draw() {
+
+				requestAnimationFrame( draw );
+				
+				// experiment with code from the snippets menu here
+				camera.position.z = Math.sin( Date.now() * 0.002 ) * 500;
+				camera.position.y = Math.sin( Date.now() * 0.002 ) * 300;
+				camera.lookAt(mesh.position);
+
+				renderer.render( scene, camera );
+				mesh.rotation.x = Date.now() * 0.00018;	
+				mesh.rotation.y = Date.now() * 0.00018;	
+				mesh.rotation.z = Date.now() * 0.009;
+
+			}
+
+			setup();
+			draw();
+
+		</script>
+		
+	</body>
+</html>
+</html>
